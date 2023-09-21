@@ -1,0 +1,36 @@
+Arguments: 
+  /Users/karl.wint/.nvm/versions/node/v12.13.1/bin/node /Users/karl.wint/.nvm/versions/node/v12.13.1/bin/yarn init
+
+PATH: 
+  /Users/karl.wint/Library/Python/3.11/bin:/Users/karl.wint/Documents/development/flutter/bin/cache/dart-sdk/bin/:/Users/karl.wint/opt/anaconda3/bin:/Users/karl.wint/Documents/development/google-cloud-sdk/bin:/Users/karl.wint/opt/anaconda3/bin:/usr/local/opt/binutils/bin:/Users/karl.wint/.nvm/versions/node/v12.13.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/karl.wint/Documents/development/flutter/bin/cache/dart-sdk/bin/:/Users/karl.wint/Documents/development/flutter/bin:/Users/karl.wint/Documents/development/terraform:/Users/karl.wint/Library/Android/sdk/build-tools/29.0.2:/Users/karl.wint/Library/Android/sdk/platform-tools:/Users/karl.wint/Documents/projects/golang/bin:/Users/karl.wint/documents/whitehat/tools/Image-ExifTool-11.85:/Users/karl.wint/documents/whitehat/tools/aquatone_macos_amd64_1.7.0:/Users/karl.wint/.cargo/bin:/Users/karl.wint/.protostar/dist/protostar:/Users/karl.wint/.local/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  12.13.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/Users/karl.wint/.nvm/versions/node/v12.13.1/lib/node_modules/yarn/lib/cli.js:137150:13)
+      at Interface.emit (events.js:210:5)
+      at Interface._ttyWrite (readline.js:887:16)
+      at ReadStream.onkeypress (readline.js:191:10)
+      at ReadStream.emit (events.js:210:5)
+      at emitKeys (internal/readline/utils.js:433:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1153:36)
+      at ReadStream.emit (events.js:210:5)
+      at addChunk (_stream_readable.js:309:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
