@@ -37,6 +37,9 @@ node app.mjs portfolio-value
 // To calculate anyone else's portfolio value
 node app.mjs portfolio-value 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9
 ```
+###### Output example
+
+![](https://i.imgur.com/zgWjSHO.png)
 
 Buy key
 
@@ -48,9 +51,6 @@ node app.mjs buy-key 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9
 node app.mjs buy-key 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9 3
 ```
 
-###### Output example
-
-![](https://i.imgur.com/zgWjSHO.png)
 
 ## Other things to note
 
