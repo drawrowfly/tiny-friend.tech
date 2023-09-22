@@ -77,6 +77,33 @@ export class TinyBuddy {
         await this.WEB3.eth.sendSignedTransaction(signed.rawTransaction);
     }
 
+    /**
+     * FRIEND.TECH CONTRACT call to buy a key
+     * @param {*} address
+     * @param {*} sell_keys
+     */
+    async contract_buyShares(address, number_of_keys = 1) {
+        const query = this.FRIENDTECH_CONTRACT.methods.buyShares(address, number_of_keys);
+
+        const buy_price = (await this.FRIENDTECH_CONTRACT.methods.getBuyPriceAfterFee(address, number_of_keys).call()).toString();
+        const human_price = parseFloat(this.WEB3.utils.fromWei(buy_price, "ether").toString());
+        const tx = {
+            type: 2,
+            from: this.WALLET.address,
+            to: this.FRIENDTECH_ADDRESS,
+            value: buy_price,
+            maxFeePerGas: this.WEB3.utils.toWei("1", "gwei"),
+            maxPriorityFeePerGas: this.WEB3.utils.toWei("0.1", "gwei"),
+            data: query.encodeABI(),
+        };
+
+        tx.gas = await this.WEB3.eth.estimateGas(tx);
+        const signed = await this.WEB3.eth.accounts.signTransaction(tx, this.BOT_KEY);
+        await this.WEB3.eth.sendSignedTransaction(signed.rawTransaction);
+
+        console.log(`\n::FRIENDS.TECH KEY PURCHASE COMPLETED :: ${address} :: ${number_of_keys} :: PAID :: ${human_price} ETH`);
+    }
+
     async mass_seller(KEYS) {
         return new Promise((r) => {
             forEachLimit(

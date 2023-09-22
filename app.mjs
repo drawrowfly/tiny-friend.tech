@@ -18,6 +18,7 @@ const WALLET = WEB3.eth.accounts.privateKeyToAccount(BOK_KEY);
 (async () => {
     const task = process.argv[2];
     const option_1 = process.argv[3];
+    const option_2 = process.argv[4];
 
     const FRIENDS_DB_PATH = "friends.json";
 
@@ -34,6 +35,18 @@ const WALLET = WEB3.eth.accounts.privateKeyToAccount(BOK_KEY);
     const TinyFriend = new TinyBuddy(WEB3, WALLET, BOK_KEY, FRIENDS_DB, FRIENDS_DB_STATE);
 
     switch (task) {
+        case "buy-key":
+            {
+                if (!option_1) {
+                    console.log(`Specifie address of a key to buy`);
+                    process.exit();
+                }
+
+                console.log(`::FRIENDS.TECH BUY KEY STARTED\n`);
+                await TinyFriend.contract_buyShares(option_1, parseInt(option_2) || 1);
+                console.log(`\n::FRIENDS.TECH BUY KEY COMPLETED`);
+            }
+            break;
         case "mass-seller":
             {
                 console.log(`::FRIENDS.TECH MASS SELLING STARTED\n`);

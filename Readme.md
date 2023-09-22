@@ -38,6 +38,16 @@ node app.mjs portfolio-value
 node app.mjs portfolio-value 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9
 ```
 
+Buy key
+
+```sh
+// Buy single key
+node app.mjs buy-key 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9
+
+// Buy N amounts of key. For example 3 in command below
+node app.mjs buy-key 0xfd7232e66a69e1ae01e1e0ea8fab4776e2d325a9 3
+```
+
 ###### Output example
 
 ![](https://i.imgur.com/zgWjSHO.png)
