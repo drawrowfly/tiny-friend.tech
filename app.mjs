@@ -2,13 +2,10 @@ import { appendFileSync, existsSync, writeFileSync, readFileSync } from "fs";
 import Web3 from "web3";
 import * as dotenv from "dotenv";
 import { queue } from "async";
-import fetch from "node-fetch";
-import { HttpsProxyAgent } from "https-proxy-agent";
 dotenv.config();
 
 import { TinyBuddy } from "./friends.mjs";
 
-const PROXY = process.env.PROXY || "";
 const RPC = process.env.BASE_RPC;
 const BOK_KEY = process.env.BOT_KEY;
 if (!BOK_KEY || !RPC) {
@@ -18,27 +15,6 @@ if (!BOK_KEY || !RPC) {
 const WEB3 = new Web3(new Web3.providers.HttpProvider(RPC));
 const WALLET = WEB3.eth.accounts.privateKeyToAccount(BOK_KEY);
 
-const parseFriends = async (pageStart) => {
-    const options = {
-        headers: {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0",
-            Accept: "*/*",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br",
-            Referer: "https://www.friend.tech/",
-            Origin: "https://www.friend.tech",
-        },
-        ...(PROXY ? { agent: new HttpsProxyAgent(PROXY) } : {}),
-    };
-    const response = await fetch(
-        `https://prod-api.kosetto.com/users/${WALLET.address}/token-holdings${pageStart ? `?pageStart=${pageStart}` : ``}`,
-        options,
-    );
-    if (response.status === 200) {
-        return await response.json();
-    }
-    throw new Error(`Can't parse friends: ${response.status}`);
-};
 (async () => {
     const task = process.argv[2];
     const option_1 = process.argv[3];
@@ -58,28 +34,19 @@ const parseFriends = async (pageStart) => {
     const TinyFriend = new TinyBuddy(WEB3, WALLET, BOK_KEY, FRIENDS_DB, FRIENDS_DB_STATE);
 
     switch (task) {
-        case "parse-friends":
-            {
-                console.log(`::FRIENDS.TECH KEY PARSING STARTED`);
-                let pageStart = 0;
-                const KEYS = [];
-                while (true) {
-                    const data = await parseFriends(pageStart);
-                    const users = data.users;
-                    pageStart = data.nextPageStart;
-                    KEYS.push(...users);
-                    if (users.length < 50) break;
-                }
-                FRIENDS_DB = KEYS;
-                console.log(`::FRIENDS.TECH KEY PARSING COMPLETED :: TOTAL HOLDINGS :: ${FRIENDS_DB.length}`);
-                writeFileSync(FRIENDS_DB_PATH, JSON.stringify(FRIENDS_DB));
-            }
-            break;
         case "mass-seller":
             {
-                console.log(`::FRIENDS.TECH MASS SELLING STARTED`);
-                await TinyFriend.mass_seller();
-                console.log(`::FRIENDS.TECH MASS SELLING COMPLETED`);
+                console.log(`::FRIENDS.TECH MASS SELLING STARTED\n`);
+                const KEYS = await TinyFriend.get_all_keys();
+                await TinyFriend.mass_seller(KEYS);
+                console.log(`\n::FRIENDS.TECH MASS SELLING COMPLETED`);
+            }
+            break;
+        case "portfolio-value":
+            {
+                console.log(`::FRIENDS.TECH AFTER FEE PORTFOLIO VALUE CALCULATION STARTED\n`);
+                await TinyFriend.portfolio_value(option_1);
+                console.log(`\n::FRIENDS.TECH AFTER FEE PORTFOLIO VALUE CALCULATION COMPLETED`);
             }
             break;
         default:
