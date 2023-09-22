@@ -62,6 +62,15 @@ const WALLET = WEB3.eth.accounts.privateKeyToAccount(BOK_KEY);
                 console.log(`\n::FRIENDS.TECH AFTER FEE PORTFOLIO VALUE CALCULATION COMPLETED`);
             }
             break;
+        case "random-wallet":
+            {
+                const wallet = WEB3.eth.accounts.create();
+                console.table({
+                    address: wallet.address,
+                    private_key: wallet.privateKey,
+                });
+            }
+            break;
         default:
             console.log("No such task");
             process.exit();
